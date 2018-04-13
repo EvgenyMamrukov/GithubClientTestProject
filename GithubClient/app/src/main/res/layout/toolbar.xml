@@ -1,0 +1,110 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.evgeny.githubclient.viewmodel.ToolbarViewModel" />
+
+        <variable
+            name="searchViewModel"
+            type="com.example.evgeny.githubclient.viewmodel.SearchViewViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/toolbar_main_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_widget"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_vertical"
+            android:contentInsetEnd="@dimen/toolbar_content_inset_size"
+            android:contentInsetLeft="@dimen/toolbar_content_inset_size"
+            android:contentInsetRight="@dimen/toolbar_content_inset_size"
+            android:contentInsetStart="@dimen/toolbar_content_inset_size"
+            android:padding="@dimen/toolbar_padding"
+            app:contentInsetEnd="@dimen/toolbar_content_inset_size"
+            app:contentInsetLeft="@dimen/toolbar_content_inset_size"
+            app:contentInsetRight="@dimen/toolbar_content_inset_size"
+            app:contentInsetStart="@dimen/toolbar_content_inset_size"
+            android:background="@color/colorDesignDarkGrey">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/toolbar_back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="@dimen/toolbar_back_button_padding"
+                    android:paddingTop="@dimen/toolbar_back_button_padding"
+                    android:paddingBottom="@dimen/toolbar_back_button_padding"
+                    android:src="@drawable/ic_arrow_back"
+                    android:visibility="@{safeUnbox(viewModel.isBackButtonEnabled) ? View.VISIBLE : View.GONE}"
+                    android:onClick="@{()->viewModel.onBackButtonPressed()}"/>
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/toolbar_app_logo"
+                    android:layout_width="@dimen/toolbar_logo_size"
+                    android:layout_height="@dimen/toolbar_logo_size"
+                    android:layout_toRightOf="@+id/toolbar_back_button"
+                    android:padding="@dimen/toolbar_back_button_padding"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_logo_vector"
+                    app:tint="@color/colorWhite"/>
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/toolbar_app_logo"
+                    android:gravity="center_vertical"
+                    android:text="@{viewModel.toolbarTitle}"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/toolbar_title_text_size"
+                    android:visibility="@{viewModel.toolbarTitle == null || viewModel.toolbarTitle.isEmpty() ? View.GONE : View.VISIBLE}"/>
+
+                <android.support.v7.widget.SearchView
+                    style="@style/SearchViewStyle"
+                    android:id="@+id/toolbar_search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/toolbar_search_view_margin"
+                    android:layout_marginBottom="@dimen/toolbar_search_view_margin"
+                    android:layout_toRightOf="@+id/toolbar_title"
+                    android:layout_toLeftOf="@+id/toolbar_profile_button"
+                    android:layout_centerVertical="true"
+                    android:visibility="@{safeUnbox(viewModel.isSearchViewEnabled) ? View.VISIBLE : View.GONE}"
+                    bind:setOnQueryTextListener="@{searchViewModel.onQueryTextListener}">
+                </android.support.v7.widget.SearchView>
+
+                <ImageView
+                    android:id="@+id/toolbar_profile_button"
+                    android:layout_width="@dimen/toolbar_logo_size"
+                    android:layout_height="@dimen/toolbar_logo_size"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_alignParentRight="true"
+                    android:paddingLeft="@dimen/toolbar_profile_button_padding"
+                    android:paddingTop="@dimen/toolbar_profile_button_padding"
+                    android:paddingRight="@dimen/toolbar_profile_button_padding"
+                    android:paddingBottom="@dimen/toolbar_profile_button_padding"
+                    android:src="@drawable/ic_profile"
+                    android:visibility="@{safeUnbox(viewModel.isProfileButtonEnabled) ? View.VISIBLE : View.GONE}"
+                    android:onClick="@{()->viewModel.onProfileButtonPressed()}"/>
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+    </RelativeLayout>
+</layout>

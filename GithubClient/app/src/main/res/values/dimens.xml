@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--TOOLBAR-->
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="toolbar_padding">0dp</dimen>
+    <dimen name="toolbar_content_inset_size">0dp</dimen>
+    <dimen name="toolbar_back_button_padding">15dp</dimen>
+    <dimen name="toolbar_title_text_size">16sp</dimen>
+    <dimen name="toolbar_logo_size">60dp</dimen>
+    <dimen name="toolbar_title_text_padding_left">12dp</dimen>
+    <dimen name="toolbar_profile_button_padding">13dp</dimen>
+    <dimen name="toolbar_search_view_margin">8dp</dimen>
+
+    <!--TOOLBAR_MENU-->
+    <dimen name="toolbar_menu_width">200dp</dimen>
+
+    <!--CUSTOM_VIEW-->
+    <dimen name="default_background_border_wight">1dp</dimen>
+    <dimen name="focused_background_border_wight">2dp</dimen>
+    <dimen name="background_corner_radius">3dp</dimen>
+    <dimen name="custom_edit_text_height">45dp</dimen>
+    <dimen name="button_height">45dp</dimen>
+    <dimen name="user_avatar_view_size">60dp</dimen>
+    <dimen name="layout_corner_radius">10dp</dimen>
+
+    <!--SPLASH-->
+    <dimen name="splash_text_margin_top">10dp</dimen>
+    <dimen name="splash_app_label_text_size">18sp</dimen>
+    <dimen name="splash_progress_bar_size">24dp</dimen>
+    <dimen name="splash_progress_bar_margin_top">40dp</dimen>
+    <dimen name="splash_loading_label_text_size">14sp</dimen>
+
+    <!--LOGIN-->
+    <dimen name="login_main_container_padding_left">45dp</dimen>
+    <dimen name="login_main_container_padding_top">40dp</dimen>
+    <dimen name="login_main_container_padding_right">45dp</dimen>
+    <dimen name="login_main_container_padding_bottom">40dp</dimen>
+    <dimen name="login_field_container_padding">15dp</dimen>
+    <dimen name="login_main_text_size">16sp</dimen>
+    <dimen name="login_view_margin_top">12dp</dimen>
+    <dimen name="login_edit_text_side_padding">15dp</dimen>
+
+    <!--REPOSITORIES-->
+    <dimen name="repository_item_image_size">80dp</dimen>
+</resources>

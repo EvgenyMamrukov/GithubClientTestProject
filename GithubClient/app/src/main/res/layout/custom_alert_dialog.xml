@@ -1,0 +1,89 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.evgeny.githubclient.viewmodel.CustomAlertDialogViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:paddingLeft="@dimen/login_main_container_padding_left"
+        android:paddingRight="@dimen/login_main_container_padding_right">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_alert_dialog_background">
+
+            <TextView
+                android:id="@+id/dialog_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:paddingLeft="@dimen/login_field_container_padding"
+                android:paddingRight="@dimen/login_field_container_padding"
+                android:singleLine="true"
+                android:text="@string/authorized_as"
+                android:textColor="@color/colorDesignDarkGrey"
+                android:textSize="@dimen/toolbar_title_text_size" />
+
+            <View
+                android:id="@+id/header_separator"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_background_border_wight"
+                android:layout_below="@+id/dialog_title"
+                android:background="@color/colorDesignGrey" />
+
+            <ImageView
+                android:id="@+id/profile_image_view"
+                android:layout_width="@dimen/user_avatar_view_size"
+                android:layout_height="@dimen/user_avatar_view_size"
+                android:layout_below="@+id/dialog_title"
+                android:layout_marginBottom="@dimen/login_edit_text_side_padding"
+                android:layout_marginLeft="@dimen/login_edit_text_side_padding"
+                android:layout_marginTop="@dimen/login_edit_text_side_padding"
+                android:background="@color/colorDesignDarkGreyTranslucent" />
+
+            <TextView
+                android:id="@+id/profile_name_view"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/user_avatar_view_size"
+                android:layout_below="@+id/dialog_title"
+                android:layout_margin="@dimen/login_edit_text_side_padding"
+                android:layout_toRightOf="@+id/profile_image_view"
+                android:gravity="center_vertical"
+                android:text="@{viewModel.userName}"
+                android:textColor="@color/colorDesignDarkGrey" />
+
+            <View
+                android:id="@+id/footer_separator"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_background_border_wight"
+                android:layout_below="@+id/profile_image_view"
+                android:background="@color/colorDesignGrey" />
+
+            <TextView
+                android:id="@+id/continue_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_below="@+id/footer_separator"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:onClick="@{()->viewModel.onContinueButtonClicked()}"
+                android:paddingLeft="@dimen/login_edit_text_side_padding"
+                android:paddingRight="@dimen/login_edit_text_side_padding"
+                android:singleLine="true"
+                android:text="@string/continue_label"
+                android:textColor="@color/colorDesignDarkGrey"
+                android:textSize="@dimen/toolbar_title_text_size" />
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

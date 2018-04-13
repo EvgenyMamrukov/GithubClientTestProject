@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">GithubClient</string>
+    <string name="login_title">Авторизация</string>
+    <string name="is_loading">Идет загрузка</string>
+    <string name="close">ЗАКРЫТЬ</string>
+    <string name="invalid_data_message">Неверный логин или пароль</string>
+    <string name="login">Логин или e-mail</string>
+    <string name="password">Пароль</string>
+    <string name="you_can">Вы можете</string>
+    <string name="authorize">Авторизоваться</string>
+    <string name="or">Или</string>
+    <string name="pass_incognito">Продолжить анонимно</string>
+    <string name="authorized_as">Вы авторизованы как</string>
+    <string name="continue_label">Продолжить</string>
+    <string name="login_button_label">Войти</string>
+    <string name="logout_button_label">Выйти</string>
+    <string name="guest">Гость</string>
+    <string name="search_hint">Репозиторий</string>
+    <string name="no_results">Нет результатов</string>
+    <string name="owner">Создатель:</string>
+    <string name="repository_name">Название:</string>
+    <string name="repository_description">Описание:</string>
+
+    <string name="token_params_note">AndroidGitHubClient</string>
+    <string-array name="token_params_scopes">
+        <item>repo</item>
+    </string-array>
+</resources>

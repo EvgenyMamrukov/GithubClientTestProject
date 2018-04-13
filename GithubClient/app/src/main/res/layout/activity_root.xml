@@ -1,0 +1,51 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.evgeny.githubclient.viewmodel.ApplicationRootActivityViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/main_root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:visibility="@{safeUnbox(viewModel.isToolbarEnabled) ? View.VISIBLE : View.GONE}"/>
+
+        <FrameLayout
+            android:id="@+id/root_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:background="@android:color/transparent" />
+
+        <include
+            android:id="@+id/toolbar_menu"
+            layout="@layout/custom_toolbar_menu"
+            android:visibility="@{safeUnbox(viewModel.isToolbarEnabled) ? View.VISIBLE : View.GONE}"/>
+
+        <RelativeLayout
+            android:id="@+id/main_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:background="@color/colorDesignDarkGreyTranslucent"
+            android:visibility="@{safeUnbox(viewModel.isProgressBarEnabled) ? View.VISIBLE : View.GONE}">
+
+            <ProgressBar
+                android:layout_width="@dimen/custom_edit_text_height"
+                android:layout_height="@dimen/custom_edit_text_height"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

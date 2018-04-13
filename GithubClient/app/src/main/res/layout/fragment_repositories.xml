@@ -1,0 +1,35 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.evgeny.githubclient.viewmodel.RepositoriesFragmentViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+        <RelativeLayout
+            android:id="@+id/login_main_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/repositories_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/login_field_container_padding"
+                android:layout_marginRight="@dimen/login_field_container_padding"
+                android:overScrollMode="never"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/login_main_text_size"
+                android:layout_centerInParent="true"
+                android:textColor="@color/colorDesignDarkGrey"
+                android:text="@string/no_results"
+                android:visibility="@{safeUnbox(viewModel.isRepositoriesListEmpty) ? View.VISIBLE : View.GONE}"/>
+        </RelativeLayout>
+</layout>
