@@ -5,6 +5,8 @@ import android.databinding.DataBindingUtil;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import com.example.evgeny.githubclient.activities.LoginActivity;
 import com.example.evgeny.githubclient.activities.RepositoriesActivity;
 import com.example.evgeny.githubclient.adapters.RepositoriesItemAdapter;
 import com.example.evgeny.githubclient.api.services.events.EventIds;
+import com.example.evgeny.githubclient.api.services.events.request.OnGetRepositoriesEvent;
 import com.example.evgeny.githubclient.api.services.events.respond.OnErrorEvent;
 import com.example.evgeny.githubclient.api.services.events.respond.OnGetRepositoriesRespondEvent;
 import com.example.evgeny.githubclient.api.services.events.respond.OnLogoutRespondEvent;
@@ -26,6 +29,7 @@ import com.example.evgeny.githubclient.model.blogic.UserProfileData;
 import com.example.evgeny.githubclient.model.ui.UIActionConsumer;
 import com.example.evgeny.githubclient.utils.AppNavigationUtils;
 import com.example.evgeny.githubclient.utils.LocalStoringUtils;
+import com.example.evgeny.githubclient.view.EndlessRecyclerViewScrollListener;
 import com.example.evgeny.githubclient.viewmodel.CustomAlertDialogViewModel;
 import com.example.evgeny.githubclient.viewmodel.RepositoriesFragmentViewModel;
 import com.squareup.picasso.Picasso;
@@ -40,6 +44,8 @@ import java.util.List;
  */
 
 public class RepositoriesFragment extends AbstractBaseFragment {
+    public static final int DEFAULT_START_PAGE = 1;
+    public static final int PER_PAGE_COUNT = 10;
     private FragmentRepositoriesBinding fragmentRepositoriesBinding;
     private UserProfileData userProfileData;
     private LayoutInflater layoutInflater;
@@ -47,6 +53,10 @@ public class RepositoriesFragment extends AbstractBaseFragment {
     private RepositoriesFragmentViewModel repositoriesFragmentViewModel;
 
     private RepositoriesItemAdapter repositoriesItemAdapter;
+
+    private EndlessRecyclerViewScrollListener scrollListener;
+
+    private String currentQuery = "";
 
     @Override
     protected View initBinding(LayoutInflater inflater, ViewGroup container) {
@@ -70,7 +80,23 @@ public class RepositoriesFragment extends AbstractBaseFragment {
         repositoriesItemAdapter = new RepositoriesItemAdapter();
 
         fragmentRepositoriesBinding.repositoriesList.setAdapter(repositoriesItemAdapter);
-        fragmentRepositoriesBinding.repositoriesList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        fragmentRepositoriesBinding.repositoriesList.setLayoutManager(layoutManager);
+
+        scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.v("tag_info", "Recycler view reached the bottom");
+                Log.v("tag_info", "page " + page);
+                Log.v("tag_info", "total item count " + totalItemsCount);
+
+                OnGetRepositoriesEvent onGetRepositoriesEvent = new OnGetRepositoriesEvent(EventIds.REFRESH_REPOSITORIES_EVENT, currentQuery, page + 1, PER_PAGE_COUNT);
+                eventBus.post(onGetRepositoriesEvent);
+            }
+        };
+
+        fragmentRepositoriesBinding.repositoriesList.addOnScrollListener(scrollListener);
+
     }
 
     private void showAuthorizationDialog() {
@@ -109,13 +135,23 @@ public class RepositoriesFragment extends AbstractBaseFragment {
     @Subscribe
     public void onGetRepositories(OnGetRepositoriesRespondEvent event) {
         if (event.getRequestEvent().getRequestId() == EventIds.GET_REPOSITORIES_EVENT) {
+            currentQuery = ((OnGetRepositoriesEvent)event.getRequestEvent()).getQuery();
             if (event.getResponse().getRepositoryDataList() == null || event.getResponse().getRepositoryDataList().isEmpty()) {
                 repositoriesFragmentViewModel.setIsRepositoriesListEmpty(true);
             } else {
                 repositoriesFragmentViewModel.setIsRepositoriesListEmpty(false);
             }
             ((RepositoriesActivity) getActivity()).setProgressBarEnabled(false);
-            repositoriesItemAdapter.setItems(event.getResponse().getRepositoryDataList());
+
+            List<RepositoryData> currentRepositoryDataList = event.getResponse().getRepositoryDataList();
+            repositoriesItemAdapter.setItems(currentRepositoryDataList);
+
+        } else if (event.getRequestEvent().getRequestId() == EventIds.REFRESH_REPOSITORIES_EVENT) {
+
+            List<RepositoryData> currentRepositoryDataList = event.getResponse().getRepositoryDataList();
+            List<RepositoryData> completeRepositoryDataList = repositoriesItemAdapter.getItems();
+            completeRepositoryDataList.addAll(currentRepositoryDataList);
+            repositoriesItemAdapter.setItems(completeRepositoryDataList);
         }
     }
 
