@@ -26,7 +26,7 @@ public interface IRetrofitUserService {
     Single<LoginResponse> login(@Header("Accept") String accept, @Header("Content-Type") String contentType, @Header("Authorization") String loginData, @Body AuthorizationRequestBody requestBody);
 
     @GET("search/repositories")
-    Single<RepositoriesResponse> getRepositories(@Query("q") String query);
+    Single<RepositoriesResponse> getRepositories(@Query("q") String query, @Query("page") int page, @Query("per_page") int perPage);
 
 
     @POST("authorizations")
