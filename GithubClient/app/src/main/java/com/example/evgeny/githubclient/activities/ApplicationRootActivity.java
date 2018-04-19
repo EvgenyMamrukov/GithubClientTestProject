@@ -165,7 +165,7 @@ public abstract class ApplicationRootActivity extends AppCompatActivity {
         }).<String>register(SearchViewViewModel.ACTION_SEARCH, s -> {
             if (s != null && !s.isEmpty()) {
                 setProgressBarEnabled(true);
-                OnGetRepositoriesEvent onGetRepositoriesEvent = new OnGetRepositoriesEvent(EventIds.GET_REPOSITORIES_EVENT, s);
+                OnGetRepositoriesEvent onGetRepositoriesEvent = new OnGetRepositoriesEvent(EventIds.GET_REPOSITORIES_EVENT, s, 1, 10);
                 GithubClientApp.getEventBus().post(onGetRepositoriesEvent);
             }
         });
