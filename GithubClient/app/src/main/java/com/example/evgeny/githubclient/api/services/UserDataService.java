@@ -60,7 +60,7 @@ public class UserDataService extends ApiDataService {
                         return service.login(APPLICATION_JSON, FORM_URL_ENCODED,BASIC + encode, authorizationRequestBody);
                     }
                 }).subscribeOn(Schedulers.from(ExecutorProvider.defaultHttpExecutor()))
-                .observeOn(Schedulers.from(ExecutorProvider.defaultHttpExecutor()))
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<LoginResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -93,7 +93,7 @@ public class UserDataService extends ApiDataService {
         String encode = LocalStoringUtils.getData(LocalStoringUtils.AUTHORIZATION_ENCODED_DATA, String.class);
         service.logout(APPLICATION_JSON, FORM_URL_ENCODED, BASIC + encode, id)
                 .subscribeOn(Schedulers.from(ExecutorProvider.defaultHttpExecutor()))
-                .observeOn(Schedulers.from(ExecutorProvider.defaultHttpExecutor()))
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response<LogoutResponse>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -120,7 +120,7 @@ public class UserDataService extends ApiDataService {
     public void onGetRepositories(OnGetRepositoriesEvent onGetRepositoriesEvent) {
 
         String query = onGetRepositoriesEvent.getQuery();
-        service.getRepositories(query)
+        service.getRepositories(query, onGetRepositoriesEvent.getPage(), onGetRepositoriesEvent.getPerPage())
                 .subscribeOn(Schedulers.from(ExecutorProvider.defaultHttpExecutor()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<RepositoriesResponse>() {
