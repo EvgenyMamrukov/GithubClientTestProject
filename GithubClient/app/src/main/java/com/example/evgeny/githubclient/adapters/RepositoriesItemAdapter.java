@@ -27,12 +27,17 @@ public class RepositoriesItemAdapter extends RecyclerView.Adapter<RepositoriesIt
     }
 
     public void setItems(List<RepositoryData> itemList) {
+        this.itemList = new ArrayList<>();
         this.itemList = itemList;
-        itemBindingList.removeAll(itemBindingList);
+        itemBindingList = new ArrayList<>();
         for (RepositoryData item : itemList) {
             itemBindingList.add(null);
         }
         notifyDataSetChanged();
+    }
+
+    public List<RepositoryData> getItems() {
+        return itemList;
     }
 
     @Override
