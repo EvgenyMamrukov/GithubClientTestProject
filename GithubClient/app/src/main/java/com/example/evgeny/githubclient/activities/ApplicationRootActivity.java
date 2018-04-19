@@ -22,6 +22,7 @@ import com.example.evgeny.githubclient.api.services.events.request.OnLogoutEvent
 import com.example.evgeny.githubclient.databinding.ActivityRootBinding;
 import com.example.evgeny.githubclient.databinding.CustomToolbarMenuBinding;
 import com.example.evgeny.githubclient.databinding.ToolbarBinding;
+import com.example.evgeny.githubclient.fragments.RepositoriesFragment;
 import com.example.evgeny.githubclient.model.blogic.UserProfileData;
 import com.example.evgeny.githubclient.model.ui.UIActionConsumer;
 import com.example.evgeny.githubclient.utils.AppNavigationUtils;
@@ -165,7 +166,7 @@ public abstract class ApplicationRootActivity extends AppCompatActivity {
         }).<String>register(SearchViewViewModel.ACTION_SEARCH, s -> {
             if (s != null && !s.isEmpty()) {
                 setProgressBarEnabled(true);
-                OnGetRepositoriesEvent onGetRepositoriesEvent = new OnGetRepositoriesEvent(EventIds.GET_REPOSITORIES_EVENT, s, 1, 10);
+                OnGetRepositoriesEvent onGetRepositoriesEvent = new OnGetRepositoriesEvent(EventIds.GET_REPOSITORIES_EVENT, s, RepositoriesFragment.DEFAULT_START_PAGE, RepositoriesFragment.PER_PAGE_COUNT);
                 GithubClientApp.getEventBus().post(onGetRepositoriesEvent);
             }
         });
